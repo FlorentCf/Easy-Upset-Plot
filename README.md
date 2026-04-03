@@ -80,6 +80,7 @@ Accepted set values:
 - `sample-data/small-preaggregated.csv`
 - `sample-data/edge-cases.csv`
 - `sample-data/generate-large-sample.mjs`
+- [Demo data table](./docs/DEMO_DATA.md)
 
 ## Known Limitations
 
