@@ -29,6 +29,37 @@ Easy UpSet Plot is close to AppSource-ready, but Microsoft submission still requ
   - categories
   - search keywords
 
+## Partner Center Entry Point
+
+Current Microsoft submission path:
+
+1. Sign in to Partner Center
+2. Open `Marketplace offers`
+3. Select `+ New offer`
+4. Select `Power BI visual`
+
+Microsoft Learn references:
+
+- [Create a Power BI visual offer in Partner Center](https://learn.microsoft.com/en-us/partner-center/marketplace-offers/power-bi-visual-offer-setup)
+- [Configure Power BI visual offer listing details](https://learn.microsoft.com/en-us/partner-center/marketplace-offers/power-bi-visual-offer-listing)
+- [Publish Power BI visuals](https://learn.microsoft.com/en-us/power-bi/developer/visuals/office-store)
+
+Direct Partner Center URL:
+
+- [https://partner.microsoft.com/dashboard/marketplace-offers/overview](https://partner.microsoft.com/dashboard/marketplace-offers/overview)
+
+If `Power BI visual` does not appear in `+ New offer`, the account is usually missing the right marketplace enrollment or permissions.
+
+## Current Public URLs
+
+These URLs can already be used for a first submission:
+
+- Support: [https://github.com/FlorentCf/Easy-Upset-Plot/issues](https://github.com/FlorentCf/Easy-Upset-Plot/issues)
+- Privacy: [https://github.com/FlorentCf/Easy-Upset-Plot/blob/main/docs/PRIVACY.md](https://github.com/FlorentCf/Easy-Upset-Plot/blob/main/docs/PRIVACY.md)
+- EULA: [https://github.com/FlorentCf/Easy-Upset-Plot/blob/main/docs/EULA.md](https://github.com/FlorentCf/Easy-Upset-Plot/blob/main/docs/EULA.md)
+
+These GitHub URLs are acceptable as working public documents, though a cleaner website or GitHub Pages URL would look more polished later.
+
 ## Recommended Final Checks
 
 - Test in Power BI Desktop

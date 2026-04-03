@@ -93,6 +93,7 @@ Accepted set values:
 This repository includes a submission checklist and starter docs for marketplace publication:
 
 - [AppSource submission checklist](./docs/APPSOURCE_SUBMISSION.md)
+- [Partner Center listing text](./docs/PARTNER_CENTER_LISTING.md)
 - [Privacy policy template](./docs/PRIVACY.md)
 - [EULA template](./docs/EULA.md)
 
