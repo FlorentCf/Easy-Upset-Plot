@@ -2,26 +2,30 @@
 
 This example shows the recommended pre-aggregated input shape for Easy UpSet Plot.
 
-Each row is one combination of binary conditions, and `Material Count` is the size of that exact combination.
+Each row is one combination of binary conditions, and `Customer Count` is the size of that exact combination.
 
 Source file:
 
-- `sample-data/small-preaggregated.csv`
+- `sample-data/customer-segments-demo.csv`
 
 ## Demo Table
 
-| FG based on UPN Type | FG based on Mapping | Is on MDM | Has Stock | Has GMC | Material Count | Label | Sort Metric |
+| Is Loyalty Member | Used Mobile App | Used Discount | Bought Premium | Repeat Customer | Customer Count | Label | Sort Metric |
 | --- | --- | --- | --- | --- | ---: | --- | ---: |
-| 1 | 1 | 1 | 0 | 1 | 148 | Core managed stock | 148 |
-| 1 | 1 | 0 | 0 | 1 | 113 | Managed GMC only | 113 |
-| 1 | 0 | 1 | 1 | 0 | 86 | UPN+MDM+Stock | 86 |
-| 1 | 0 | 0 | 1 | 0 | 64 | UPN+Stock | 64 |
-| 0 | 1 | 1 | 1 | 1 | 59 | Mapping managed stock GMC | 59 |
-| 0 | 1 | 1 | 0 | 0 | 42 | Mapping and MDM | 42 |
-| 0 | 0 | 1 | 1 | 0 | 31 | MDM+Stock | 31 |
-| 0 | 0 | 1 | 0 | 1 | 22 | MDM+GMC | 22 |
-| 0 | 0 | 0 | 1 | 1 | 18 | Stock+GMC | 18 |
-| 0 | 0 | 0 | 0 | 0 | 11 | None | 11 |
+| 1 | 1 | 1 | 1 | 1 | 182 | Power shoppers | 182 |
+| 1 | 1 | 0 | 1 | 1 | 146 | Loyal premium app repeat | 146 |
+| 1 | 0 | 1 | 0 | 1 | 121 | Loyal discount repeat | 121 |
+| 0 | 1 | 1 | 0 | 0 | 98 | App bargain hunters | 98 |
+| 1 | 1 | 1 | 0 | 1 | 93 | Loyal app discount repeat | 93 |
+| 0 | 0 | 1 | 1 | 0 | 88 | Premium discount shoppers | 88 |
+| 1 | 0 | 0 | 1 | 1 | 84 | Loyal premium repeat | 84 |
+| 0 | 1 | 0 | 1 | 0 | 73 | Premium app shoppers | 73 |
+| 1 | 1 | 0 | 0 | 0 | 67 | Loyal app only | 67 |
+| 0 | 0 | 1 | 0 | 1 | 61 | Discount repeat | 61 |
+| 0 | 1 | 0 | 0 | 1 | 52 | App repeat | 52 |
+| 1 | 0 | 0 | 0 | 1 | 47 | Loyal repeat | 47 |
+| 0 | 0 | 0 | 1 | 0 | 34 | Premium only | 34 |
+| 0 | 0 | 0 | 0 | 0 | 26 | Baseline customers | 26 |
 
 ## How To Read It
 
@@ -34,7 +38,7 @@ Source file:
 
 If you want to demo the visual quickly in Power BI:
 
-1. Load `sample-data/small-preaggregated.csv`
+1. Load `sample-data/customer-segments-demo.csv`
 2. Add the binary columns to `Set`
-3. Add `Material Count` to `Count`
+3. Add `Customer Count` to `Count`
 4. Optionally add `Label` and `Sort Metric`

@@ -77,6 +77,7 @@ Accepted set values:
 
 ## Sample Data
 
+- `sample-data/customer-segments-demo.csv`
 - `sample-data/small-preaggregated.csv`
 - `sample-data/edge-cases.csv`
 - `sample-data/generate-large-sample.mjs`
