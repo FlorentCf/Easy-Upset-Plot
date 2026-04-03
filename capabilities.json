@@ -70,7 +70,7 @@
           }
         }
       ],
-      "table": {
+      "matrix": {
         "rows": {
           "select": [
             {
@@ -82,7 +82,16 @@
               "for": {
                 "in": "label"
               }
-            },
+            }
+          ],
+          "dataReductionAlgorithm": {
+            "top": {
+              "count": 30000
+            }
+          }
+        },
+        "values": {
+          "select": [
             {
               "for": {
                 "in": "sortMetric"
@@ -340,12 +349,100 @@
           }
         }
       }
+    },
+    "subTotals": {
+      "properties": {
+        "rowSubtotals": {
+          "type": {
+            "bool": true
+          }
+        },
+        "perRowLevel": {
+          "type": {
+            "bool": true
+          }
+        },
+        "columnSubtotals": {
+          "type": {
+            "bool": true
+          }
+        },
+        "perColumnLevel": {
+          "type": {
+            "bool": true
+          }
+        },
+        "levelSubtotalEnabled": {
+          "type": {
+            "bool": true
+          }
+        },
+        "rowSubtotalsType": {
+          "type": {
+            "enumeration": [
+              {
+                "value": "Top"
+              },
+              {
+                "value": "Bottom"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "subtotals": {
+    "matrix": {
+      "rowSubtotals": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "rowSubtotals"
+        },
+        "defaultValue": false
+      },
+      "rowSubtotalsPerLevel": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "perRowLevel"
+        },
+        "defaultValue": false
+      },
+      "columnSubtotals": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "columnSubtotals"
+        },
+        "defaultValue": false
+      },
+      "columnSubtotalsPerLevel": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "perColumnLevel"
+        },
+        "defaultValue": false
+      },
+      "levelSubtotalEnabled": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "levelSubtotalEnabled"
+        },
+        "defaultValue": false
+      },
+      "rowSubtotalsType": {
+        "propertyIdentifier": {
+          "objectName": "subTotals",
+          "propertyName": "rowSubtotalsType"
+        },
+        "defaultValue": "Bottom"
+      }
     }
   },
   "tooltips": {
     "supported": true
   },
   "supportsKeyboardFocus": true,
+  "supportsHighlight": true,
   "supportsMultiVisualSelection": true,
   "supportsLandingPage": true,
   "supportsEmptyDataView": true,

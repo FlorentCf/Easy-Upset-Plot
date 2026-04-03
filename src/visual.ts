@@ -12,7 +12,7 @@ import {
     TooltipDataItem,
     UpSetLayout,
 } from "./contracts";
-import { applyDisplaySettings, parseTableData } from "./dataConversion";
+import { applyDisplaySettings, parseMatrixData, parseTableData } from "./dataConversion";
 import { computeLayout } from "./layout";
 import { PerfTracker } from "./perf";
 import { CanvasRenderer } from "./rendering";
@@ -26,11 +26,15 @@ import VisualUpdateType = powerbi.VisualUpdateType;
 
 type VisualHost = powerbi.extensibility.visual.IVisualHost;
 type SelectionManager = powerbi.extensibility.ISelectionManager;
+type DataViewHierarchyLevel = powerbi.DataViewHierarchyLevel;
+type DataViewMatrixNode = powerbi.DataViewMatrixNode;
 
 const EMPTY_PARSED_DATA: ParsedVisualData = {
     status: "empty",
     statusMessage: "Add fields to begin.",
     totalCount: 0,
+    totalHighlightCount: 0,
+    hasHighlights: false,
     validRowCount: 0,
     skippedRowCount: 0,
     countFormatString: undefined,
@@ -89,7 +93,7 @@ export class Visual implements IVisual {
         this.root = document.createElement("div");
         this.root.className = "fast-upset";
         this.root.setAttribute("role", "group");
-        this.root.setAttribute("aria-label", "UpSet Criteria custom visual");
+        this.root.setAttribute("aria-label", "Easy UpSet Plot custom visual");
         this.root.tabIndex = 0;
 
         this.canvas = document.createElement("canvas");
@@ -163,6 +167,13 @@ export class Visual implements IVisual {
             if ((options.type & VisualUpdateType.Data) || this.parsedData.status !== "ready") {
                 this.parsedData = this.perfTracker.measure("parse", () => {
                     const table = safeDataView.table;
+                    const matrix = safeDataView.matrix;
+                    if (matrix) {
+                        return parseMatrixData(
+                            matrix,
+                            (pathNodes, levels) => createMatrixSelectionId(this.host, pathNodes, levels),
+                        );
+                    }
                     if (!table) {
                         return parseTableData(undefined, () => this.emptySelectionId);
                     }
@@ -275,7 +286,7 @@ export class Visual implements IVisual {
         replaceChildren(
             this.landingPage,
             createDiv("fast-upset__landing-card", [
-                createDiv("fast-upset__landing-title", "UpSet Criteria"),
+                createDiv("fast-upset__landing-title", "Easy UpSet Plot"),
                 createDiv("fast-upset__landing-body", "Add one or more Set fields and a Count measure to start exploring intersections."),
                 createDiv("fast-upset__landing-steps", "1. Add 0/1 set columns. 2. Add one Count measure. 3. Pick Exact or Inclusive mode in the format pane."),
             ]),
@@ -319,7 +330,7 @@ export class Visual implements IVisual {
         this.syncSetButtons();
         this.root.setAttribute(
             "aria-label",
-            `UpSet Criteria with ${this.displayData.setColumns.length} sets and ${this.displayData.displayedIntersections.length} displayed intersections.`,
+            `Easy UpSet Plot with ${this.displayData.setColumns.length} sets and ${this.displayData.displayedIntersections.length} displayed intersections.`,
         );
     }
 
@@ -692,4 +703,17 @@ function getSafeDataView(dataView: powerbi.DataView | undefined): powerbi.DataVi
             rows: [],
         },
     } as powerbi.DataView;
+}
+
+function createMatrixSelectionId(
+    host: VisualHost,
+    pathNodes: DataViewMatrixNode[],
+    levels: DataViewHierarchyLevel[],
+): SelectionId {
+    let builder = host.createSelectionIdBuilder();
+    for (const node of pathNodes) {
+        builder = builder.withMatrixNode(node, levels);
+    }
+
+    return builder.createSelectionId() as SelectionId;
 }

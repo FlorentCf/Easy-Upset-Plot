@@ -2,11 +2,10 @@ import assert = require("node:assert/strict");
 
 import powerbi from "powerbi-visuals-api";
 
-import { applyDisplaySettings, coerceBinaryFlag, parseTableData } from "../src/dataConversion";
+import { applyDisplaySettings, coerceBinaryFlag, parseMatrixData, parseTableData } from "../src/dataConversion";
 import { ResolvedSettings, SelectionId } from "../src/contracts";
 
-function createSelectionId(rowIndex: number): SelectionId {
-    const key = `row-${rowIndex}`;
+function createSelectionId(key: string): SelectionId {
     return {
         equals: (other) => other.getKey() === key,
         includes: (other) => other.getKey() === key,
@@ -73,6 +72,73 @@ function createTable(rows: unknown[][]): powerbi.DataViewTable {
     };
 }
 
+function createMatrixRowNode(
+    level: number,
+    value: powerbi.PrimitiveValue,
+    children?: powerbi.DataViewMatrixNode[],
+    values?: { [id: number]: powerbi.DataViewMatrixNodeValue },
+): powerbi.DataViewMatrixNode {
+    return {
+        level,
+        value,
+        levelValues: [
+            {
+                value,
+                levelSourceIndex: 0,
+            },
+        ],
+        children,
+        values,
+    };
+}
+
+function createMatrix(): powerbi.DataViewMatrix {
+    return {
+        rows: {
+            levels: [
+                { sources: [{ displayName: "Set A", roles: { set: true } } as powerbi.DataViewMetadataColumn] },
+                { sources: [{ displayName: "Set B", roles: { set: true } } as powerbi.DataViewMetadataColumn] },
+                { sources: [{ displayName: "Label", roles: { label: true } } as powerbi.DataViewMetadataColumn] },
+            ],
+            root: {
+                children: [
+                    createMatrixRowNode(0, 1, [
+                        createMatrixRowNode(1, 0, [
+                            createMatrixRowNode(2, "A only", undefined, {
+                                0: { valueSourceIndex: 0, value: 3 },
+                                1: { valueSourceIndex: 1, value: 10, highlight: 4 },
+                            },
+                            ),
+                        ]),
+                        createMatrixRowNode(1, 1, [
+                            createMatrixRowNode(2, "A and B", undefined, {
+                                0: { valueSourceIndex: 0, value: 5 },
+                                1: { valueSourceIndex: 1, value: 8, highlight: 2 },
+                            }),
+                        ]),
+                    ]),
+                    createMatrixRowNode(0, 0, [
+                        createMatrixRowNode(1, 1, [
+                            createMatrixRowNode(2, "B only", undefined, {
+                                0: { valueSourceIndex: 0, value: 2 },
+                                1: { valueSourceIndex: 1, value: 7 },
+                            }),
+                        ]),
+                    ]),
+                ],
+            },
+        },
+        columns: {
+            levels: [],
+            root: {},
+        },
+        valueSources: [
+            { displayName: "Sort Metric", roles: { sortMetric: true } } as powerbi.DataViewMetadataColumn,
+            { displayName: "Count", roles: { count: true }, format: "#,0" } as powerbi.DataViewMetadataColumn,
+        ],
+    };
+}
+
 type RunCase = (name: string, testCase: () => void) => void;
 
 export function runDataConversionTests(run: RunCase): void {
@@ -94,11 +160,12 @@ export function runDataConversionTests(run: RunCase): void {
                 [1, 1, 5, "A+B", 3],
                 [0, 1, 7, "B only", 4],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         assert.equal(parsed.status, "ready");
         assert.equal(parsed.totalCount, 26);
+        assert.equal(parsed.totalHighlightCount, 0);
         assert.equal(parsed.allIntersections.length, 3);
         assert.equal(parsed.sets[0].size, 19);
         assert.equal(parsed.sets[1].size, 12);
@@ -109,6 +176,22 @@ export function runDataConversionTests(run: RunCase): void {
         assert.equal(aOnly?.selectionIds.length, 2);
     });
 
+    run("parseMatrixData aggregates highlights from matrix leaf nodes", () => {
+        const parsed = parseMatrixData(
+            createMatrix(),
+            (pathNodes) => createSelectionId(pathNodes.map((node) => String(node.value)).join(">")),
+        );
+
+        assert.equal(parsed.status, "ready");
+        assert.equal(parsed.totalCount, 25);
+        assert.equal(parsed.totalHighlightCount, 6);
+        assert.equal(parsed.hasHighlights, true);
+        assert.equal(parsed.allIntersections.length, 3);
+        assert.equal(parsed.sets[0].highlightSize, 6);
+        assert.equal(parsed.sets[1].highlightSize, 2);
+        assert.equal(parsed.countFormatString, "#,0");
+    });
+
     run("parseTableData skips invalid count or set rows safely", () => {
         const parsed = parseTableData(
             createTable([
@@ -117,7 +200,7 @@ export function runDataConversionTests(run: RunCase): void {
                 [0, 1, 0, "zero count", 1],
                 [1, 1, -3, "negative", 1],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         assert.equal(parsed.status, "ready");
@@ -134,7 +217,7 @@ export function runDataConversionTests(run: RunCase): void {
                 [1, 1, 8, "AB", 1],
                 [0, 0, 7, "None", 1],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         const displayed = applyDisplaySettings(parsed, createBaseSettings({
@@ -158,7 +241,7 @@ export function runDataConversionTests(run: RunCase): void {
                 [1, 1, 8, "AB", 1],
                 [0, 0, 7, "None", 1],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         const displayed = applyDisplaySettings(parsed, createBaseSettings({
@@ -184,7 +267,7 @@ export function runDataConversionTests(run: RunCase): void {
                 [1, 0, 8, "A duplicate", 1],
                 [0, 1, 7, "B", 1],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         assert.deepEqual(
@@ -199,7 +282,7 @@ export function runDataConversionTests(run: RunCase): void {
                 [1, 0, 10, "A", 1],
                 [0, 0, 7, "None", 1],
             ]),
-            createSelectionId,
+            (rowIndex) => createSelectionId(`row-${rowIndex}`),
         );
 
         const exactDisplayed = applyDisplaySettings(parsed, createBaseSettings({

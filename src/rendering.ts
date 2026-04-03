@@ -15,11 +15,14 @@ const FONT_FAMILY = "\"Segoe UI\", wf_segoe-ui_normal, helvetica, arial, sans-se
 interface InteractionContext {
     explicitSelectionActive: boolean;
     externalSelectionActive: boolean;
+    nativeHighlightActive: boolean;
     explicitIntersectionIds: Set<string>;
     explicitSetIds: Set<string>;
     highlightedSetIndexes: Set<number>;
     setOverlapRatios: Map<number, number>;
     intersectionOverlapRatios: Map<string, number>;
+    setHighlightRatios: Map<number, number>;
+    intersectionHighlightRatios: Map<string, number>;
 }
 
 interface SelectionPredicate {
@@ -62,7 +65,7 @@ export class CanvasRenderer {
     constructor(canvas: HTMLCanvasElement) {
         const context = canvas.getContext("2d", { alpha: false });
         if (!context) {
-            throw new Error("UpSet Criteria requires a 2D canvas context.");
+            throw new Error("Easy UpSet Plot requires a 2D canvas context.");
         }
 
         this.canvas = canvas;
@@ -122,7 +125,7 @@ export class CanvasRenderer {
         context.textAlign = "center";
         context.textBaseline = "middle";
         context.font = `600 ${Math.max(12, settings.fontSize + 2)}px ${FONT_FAMILY}`;
-        context.fillText("UpSet Criteria", layout.viewportWidth / 2, (layout.viewportHeight / 2) - 14);
+        context.fillText("Easy UpSet Plot", layout.viewportWidth / 2, (layout.viewportHeight / 2) - 14);
         context.font = `400 ${Math.max(11, settings.fontSize)}px ${FONT_FAMILY}`;
         context.fillText(message, layout.viewportWidth / 2, (layout.viewportHeight / 2) + 12);
     }
@@ -163,6 +166,20 @@ export class CanvasRenderer {
                     height: Math.max(0, rowLayout.height - 4),
                 }, 8);
             }
+
+            if (!interaction.explicitSelectionActive && interaction.nativeHighlightActive) {
+                const highlightRatio = interaction.setHighlightRatios.get(rowLayout.index) ?? 0;
+                if (highlightRatio > 0) {
+                    context.globalAlpha = 0.04 + (0.06 * highlightRatio);
+                    context.fillStyle = settings.selectedColor;
+                    fillRoundedRect(context, {
+                        x: rowBandRect.x,
+                        y: rowLayout.y + 2,
+                        width: rowBandRect.width,
+                        height: Math.max(0, rowLayout.height - 4),
+                    }, 8);
+                }
+            }
         }
 
         for (const columnLayout of layout.columnLayouts) {
@@ -172,13 +189,16 @@ export class CanvasRenderer {
             }
 
             const overlapRatio = interaction.intersectionOverlapRatios.get(intersection.id) ?? 0;
-            if (overlapRatio <= 0) {
+            const highlightRatio = interaction.intersectionHighlightRatios.get(intersection.id) ?? 0;
+            if (overlapRatio <= 0 && highlightRatio <= 0) {
                 continue;
             }
 
             context.globalAlpha = interaction.explicitIntersectionIds.has(intersection.id)
                 ? 0.08
-                : (0.05 + (overlapRatio * 0.08));
+                : (interaction.explicitSelectionActive
+                    ? (0.05 + (overlapRatio * 0.08))
+                    : (0.03 + (highlightRatio * 0.06)));
             context.fillStyle = settings.selectedColor;
             fillRoundedRect(context, {
                 x: columnLayout.x + 1,
@@ -219,6 +239,7 @@ export class CanvasRenderer {
             const explicitlySelected = interaction.explicitSetIds.has(setDatum.id);
             const hostSelected = isDatumSelected(setDatum.selectionKeys, selectedRowKeys);
             const overlapRatio = interaction.setOverlapRatios.get(setDatum.setIndex) ?? 0;
+            const nativeHighlightRatio = interaction.setHighlightRatios.get(setDatum.setIndex) ?? 0;
             const related = overlapRatio > 0;
             const alpha = resolveDatumAlpha(settings, interaction, explicitlySelected, related, hostSelected);
             const barLength = maxSetSize > 0 ? (setDatum.size / maxSetSize) * rowLayout.barRect.width : 0;
@@ -237,7 +258,19 @@ export class CanvasRenderer {
             context.fillStyle = explicitlySelected ? settings.selectedColor : settings.setBarColor;
             fillRoundedRect(context, barRect, Math.min(6, barRect.height / 2));
 
-            if (related && !explicitlySelected && barRect.width > 3) {
+            if (interaction.nativeHighlightActive && !interaction.explicitSelectionActive && nativeHighlightRatio > 0 && barRect.width > 3) {
+                const highlightWidth = Math.min(barRect.width, Math.max(5, barRect.width * nativeHighlightRatio));
+                context.globalAlpha = 0.96;
+                context.fillStyle = settings.selectedColor;
+                fillRoundedRect(context, {
+                    x: barRect.x + barRect.width - highlightWidth,
+                    y: barRect.y,
+                    width: highlightWidth,
+                    height: barRect.height,
+                }, Math.min(6, barRect.height / 2));
+            }
+
+            if (related && !explicitlySelected && !interaction.nativeHighlightActive && barRect.width > 3) {
                 const highlightWidth = Math.min(barRect.width, Math.max(5, barRect.width * overlapRatio));
                 context.globalAlpha = 0.92;
                 context.fillStyle = settings.selectedColor;
@@ -330,6 +363,7 @@ export class CanvasRenderer {
             const explicitlySelected = interaction.explicitIntersectionIds.has(intersection.id);
             const hostSelected = isDatumSelected(intersection.selectionKeys, selectedRowKeys);
             const overlapRatio = interaction.intersectionOverlapRatios.get(intersection.id) ?? 0;
+            const nativeHighlightRatio = interaction.intersectionHighlightRatios.get(intersection.id) ?? 0;
             const related = overlapRatio > 0;
             const alpha = resolveDatumAlpha(settings, interaction, explicitlySelected, related, hostSelected);
             const scaledHeight = intersection.count > 0
@@ -347,7 +381,19 @@ export class CanvasRenderer {
                 : settings.intersectionBarColor;
             fillRoundedRect(context, barRect, radius);
 
-            if (related && !explicitlySelected && !fullyContained && scaledHeight > 4) {
+            if (interaction.nativeHighlightActive && !interaction.explicitSelectionActive && nativeHighlightRatio > 0 && scaledHeight > 4) {
+                const highlightHeight = Math.min(scaledHeight, Math.max(4, scaledHeight * nativeHighlightRatio));
+                context.globalAlpha = 0.96;
+                context.fillStyle = settings.selectedColor;
+                fillRoundedRect(context, {
+                    x: barRect.x,
+                    y: barRect.y + barRect.height - highlightHeight,
+                    width: barRect.width,
+                    height: highlightHeight,
+                }, radius);
+            }
+
+            if (related && !explicitlySelected && !interaction.nativeHighlightActive && !fullyContained && scaledHeight > 4) {
                 const accentHeight = Math.min(scaledHeight, Math.max(4, scaledHeight * overlapRatio));
                 context.globalAlpha = 0.92;
                 context.fillStyle = settings.selectedColor;
@@ -474,16 +520,22 @@ export class CanvasRenderer {
             const explicitlySelected = interaction.explicitIntersectionIds.has(intersection.id);
             const hostSelected = isDatumSelected(intersection.selectionKeys, selectedRowKeys);
             const overlapRatio = interaction.intersectionOverlapRatios.get(intersection.id) ?? 0;
+            const nativeHighlightRatio = interaction.intersectionHighlightRatios.get(intersection.id) ?? 0;
             const related = overlapRatio > 0;
             const alpha = resolveDatumAlpha(settings, interaction, explicitlySelected, related, hostSelected);
+            const nativeHighlighted = interaction.nativeHighlightActive && nativeHighlightRatio > 0;
 
             if (!intersection.isOther && intersection.activeSetIndexes.length > 1) {
                 const firstRow = layout.rowLayouts[intersection.activeSetIndexes[0]];
                 const lastRow = layout.rowLayouts[intersection.activeSetIndexes[intersection.activeSetIndexes.length - 1]];
 
                 if (firstRow && lastRow) {
-                    context.globalAlpha = explicitlySelected ? 0.96 : (related ? 0.48 + (0.32 * overlapRatio) : alpha);
-                    context.strokeStyle = explicitlySelected || related ? settings.selectedColor : settings.connectorColor;
+                    context.globalAlpha = explicitlySelected
+                        ? 0.96
+                        : (nativeHighlighted
+                            ? 0.52 + (0.32 * nativeHighlightRatio)
+                            : (related ? 0.48 + (0.32 * overlapRatio) : alpha));
+                    context.strokeStyle = explicitlySelected || nativeHighlighted || related ? settings.selectedColor : settings.connectorColor;
                     context.lineWidth = explicitlySelected ? settings.connectorThickness + 0.75 : settings.connectorThickness;
                     context.lineCap = "round";
                     context.beginPath();
@@ -498,13 +550,15 @@ export class CanvasRenderer {
                 const rowHighlighted = interaction.highlightedSetIndexes.has(rowLayout.index);
                 const dotAlpha = interaction.explicitSelectionActive
                     ? (explicitlySelected ? 1 : (rowHighlighted || related ? 0.92 : Math.max(settings.dimmedOpacity, 0.58)))
-                    : (interaction.externalSelectionActive ? (hostSelected ? 1 : Math.max(settings.dimmedOpacity, 0.52)) : 1);
+                    : (interaction.nativeHighlightActive
+                        ? (nativeHighlighted ? 1 : 0.78)
+                        : (interaction.externalSelectionActive ? (hostSelected ? 1 : Math.max(settings.dimmedOpacity, 0.52)) : 1));
 
                 context.globalAlpha = dotAlpha;
                 context.beginPath();
                 context.arc(columnLayout.centerX, rowLayout.centerY, dotRadius, 0, Math.PI * 2);
                 context.fillStyle = active
-                    ? ((explicitlySelected || rowHighlighted) ? settings.selectedColor : settings.activeDotColor)
+                    ? ((explicitlySelected || rowHighlighted || nativeHighlighted) ? settings.selectedColor : settings.activeDotColor)
                     : settings.inactiveDotColor;
                 context.fill();
 
@@ -574,6 +628,8 @@ function buildInteractionContext(
 
     const intersectionOverlapCounts = new Map<string, number>();
     const setOverlapCounts = new Map<number, number>();
+    const setHighlightRatios = new Map<number, number>();
+    const intersectionHighlightRatios = new Map<string, number>();
 
     if (selectionPredicates.length > 0) {
         for (const exactIntersection of data.allIntersections) {
@@ -612,6 +668,11 @@ function buildInteractionContext(
         if (overlapRatio > 0) {
             setOverlapRatios.set(setDatum.setIndex, overlapRatio);
         }
+
+        const nativeHighlightRatio = setDatum.size > 0 ? Math.min(1, setDatum.highlightSize / setDatum.size) : 0;
+        if (nativeHighlightRatio > 0) {
+            setHighlightRatios.set(setDatum.setIndex, nativeHighlightRatio);
+        }
     }
 
     const intersectionOverlapRatios = new Map<string, number>();
@@ -621,16 +682,26 @@ function buildInteractionContext(
             ? 1
             : (intersection.count > 0 ? Math.min(1, overlapCount / intersection.count) : 0);
         intersectionOverlapRatios.set(intersection.id, overlapRatio);
+
+        const nativeHighlightRatio = intersection.count > 0
+            ? Math.min(1, intersection.highlightCount / intersection.count)
+            : 0;
+        if (nativeHighlightRatio > 0) {
+            intersectionHighlightRatios.set(intersection.id, nativeHighlightRatio);
+        }
     }
 
     return {
         explicitSelectionActive: explicitSelectedDatumIds.size > 0,
         externalSelectionActive: explicitSelectedDatumIds.size === 0 && selectedRowKeys.size > 0,
+        nativeHighlightActive: explicitSelectedDatumIds.size === 0 && data.hasHighlights,
         explicitIntersectionIds,
         explicitSetIds,
         highlightedSetIndexes,
         setOverlapRatios,
         intersectionOverlapRatios,
+        setHighlightRatios,
+        intersectionHighlightRatios,
     };
 }
 
@@ -705,6 +776,10 @@ function resolveDatumAlpha(
 
     if (interaction.externalSelectionActive) {
         return hostSelected ? 1 : Math.max(settings.dimmedOpacity, 0.56);
+    }
+
+    if (interaction.nativeHighlightActive) {
+        return 1;
     }
 
     return 1;

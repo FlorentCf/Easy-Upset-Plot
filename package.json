@@ -1,6 +1,6 @@
 {
-  "name": "powerbi-upset-criteria",
-  "description": "UpSet Criteria Power BI custom visual optimized for pre-aggregated intersection data.",
+  "name": "easy-upset-plot",
+  "description": "Easy UpSet Plot Power BI custom visual optimized for pre-aggregated intersection data.",
   "private": true,
   "license": "MIT",
   "scripts": {

@@ -58,6 +58,7 @@ const intersection: IntersectionDatum = {
     id: "mask-3",
     mask: 3,
     count: 42,
+    highlightCount: 18,
     degree: 2,
     activeSetIndexes: [0, 1],
     label: "Set A & Set B",
@@ -73,6 +74,7 @@ const setDatum: SetDatum = {
     setIndex: 0,
     name: "Set A",
     size: 75,
+    highlightSize: 24,
     selectionIds: [createSelectionId("row-1"), createSelectionId("row-2")],
     selectionKeys: ["row-1", "row-2"],
     primarySelectionId: null,
@@ -81,6 +83,8 @@ const setDatum: SetDatum = {
 const data: DisplayedVisualData = {
     status: "ready",
     totalCount: 100,
+    totalHighlightCount: 24,
+    hasHighlights: true,
     validRowCount: 3,
     skippedRowCount: 0,
     setColumns: [
@@ -104,8 +108,9 @@ export function runTooltipTests(run: RunCase): void {
         assert.equal(tooltip[1].value, "42");
         assert.equal(tooltip[3].value, "Set A, Set B");
         assert.equal(tooltip[4].value, "Includes rows where these active sets are 1, even if other sets are also 1");
-        assert.equal(tooltip[5].displayName, "Ignored sets");
-        assert.equal(tooltip[5].value, "Set C");
+        assert.equal(tooltip[7].displayName, "Ignored sets");
+        assert.equal(tooltip[7].value, "Set C");
+        assert.equal(tooltip[5].displayName, "Highlighted");
     });
 
     run("intersection tooltip explains exact mode", () => {
@@ -115,7 +120,7 @@ export function runTooltipTests(run: RunCase): void {
         });
 
         assert.equal(tooltip[4].value, "Includes only rows where active sets are 1 and inactive sets are 0");
-        assert.equal(tooltip[5].displayName, "Inactive sets");
+        assert.equal(tooltip[7].displayName, "Inactive sets");
     });
 
     run("set tooltip includes size and share of total", () => {
@@ -124,6 +129,7 @@ export function runTooltipTests(run: RunCase): void {
         assert.equal(tooltip[0].value, "Set A");
         assert.equal(tooltip[1].value, "75");
         assert.equal(tooltip[2].value, "75%");
+        assert.equal(tooltip[3].value, "24");
     });
 
     run("selection overlap tooltip shows overlap metrics", () => {
@@ -136,12 +142,14 @@ export function runTooltipTests(run: RunCase): void {
                         ...intersection,
                         mask: 3,
                         count: 42,
+                        highlightCount: 18,
                     },
                     {
                         ...intersection,
                         id: "mask-1",
                         mask: 1,
                         count: 8,
+                        highlightCount: 6,
                         activeSetIndexes: [0],
                         label: "Set A",
                     },

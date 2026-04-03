@@ -1,14 +1,36 @@
-# UpSet Criteria
+# Easy UpSet Plot
 
-UpSet Criteria is an open-source Power BI custom visual for exploring set intersections in pre-aggregated data. It is optimized for performance in Power BI Desktop and Power BI Service with a canvas-first renderer, low DOM count, and native Power BI selection support.
+Easy UpSet Plot is an open-source Power BI custom visual for exploring set intersections in pre-aggregated data. It is built for Power BI Desktop and Power BI Service with a canvas-first renderer, low DOM count, native selection support, and native highlight-data support.
 
-## Why this visual
+## Install In Power BI
 
-- Fast on pre-aggregated combination data
-- Built for constrained browser sessions in Power BI Service
-- Supports two intersection semantics
-- Uses native Power BI selection, tooltips, context menu, and keyboard focus
-- Includes a built-in guide for first-time users
+End users do not need Node.js, npm, or any terminal commands.
+
+1. Download the packaged `.pbiviz` file from the latest release or from the local `dist/` folder.
+2. Open Power BI Desktop.
+3. In the Visualizations pane, choose `...`.
+4. Select `Import a visual from a file`.
+5. Pick the `.pbiviz` file.
+
+That is the normal install path for report authors and consumers.
+
+## Build From Source
+
+These steps are only for contributors or maintainers who want to rebuild the visual package locally.
+
+Prerequisites:
+
+- Node.js 24+
+- npm
+- Power BI Desktop
+
+Commands:
+
+- `npm install`
+- `npm run check`
+- `npm run package`
+
+The importable visual package is written to `dist/`.
 
 ## Features
 
@@ -19,6 +41,7 @@ UpSet Criteria is an open-source Power BI custom visual for exploring set inters
 - Two intersection modes:
   - `Exact (true / false)`: classical UpSet semantics
   - `Inclusive (require / ignore)`: active dots required, inactive dots ignored
+- Native Power BI selection, context menu, keyboard focus, and highlight-data rendering
 - Selection-aware overlap tooltips
 - Optional empty column:
   - `None` in Exact mode
@@ -42,30 +65,6 @@ Accepted set values:
 - numeric `0` / `1`
 - boolean `false` / `true`
 
-## Build
-
-Prerequisites:
-
-- Node.js 24+
-- npm
-- Power BI Desktop
-
-Commands:
-
-- `npm install`
-- `npm run check`
-- `npm run package`
-
-The importable visual package is written to `dist/`.
-
-## Import Into Power BI
-
-1. Run `npm run package`
-2. Open Power BI Desktop
-3. In the Visualizations pane, choose `...`
-4. Select `Import a visual from a file`
-5. Pick the `.pbiviz` file from `dist/`
-
 ## Project Layout
 
 - `src/visual.ts`
@@ -74,6 +73,7 @@ The importable visual package is written to `dist/`.
 - `src/settings.ts`
 - `capabilities.json`
 - `pbiviz.json`
+- `docs/APPSOURCE_SUBMISSION.md`
 
 ## Sample Data
 
@@ -85,22 +85,21 @@ The importable visual package is written to `dist/`.
 
 - Optimized for pre-aggregated mode, not raw element mode
 - Maximum 20 set columns
-- Uses table mapping, so native Power BI highlight payload support is not implemented yet
 - Synthetic `Other` buckets do not map to a single row identity
+- The internal visual GUID remains stable as `fastUpsetPlot...` so existing imported reports can upgrade cleanly
 
-## Publish Readiness
+## AppSource Readiness
 
-This project is close to AppSource-ready, but before Microsoft marketplace submission you should still verify:
+This repository includes a submission checklist and starter docs for marketplace publication:
 
-- final support/contact URLs
-- final publisher assets and screenshots
-- accessibility review in Power BI Desktop and Service
-- certification expectations for native highlight support if you decide to pursue certified status
+- [AppSource submission checklist](./docs/APPSOURCE_SUBMISSION.md)
+- [Privacy policy template](./docs/PRIVACY.md)
+- [EULA template](./docs/EULA.md)
 
-Relevant Microsoft guidance:
+For Microsoft guidance, see:
 
-- [Publishing guidelines for Power BI custom visuals](https://learn.microsoft.com/power-bi/developer/visuals/guidelines-powerbi-visuals)
-- [Visual interactions in Power BI custom visuals](https://learn.microsoft.com/en-us/power-bi/developer/visuals/visuals-interactions)
+- [Publish Power BI visuals](https://learn.microsoft.com/en-us/power-bi/developer/visuals/office-store)
+- [Guidelines for publishing Power BI visuals](https://learn.microsoft.com/power-bi/developer/visuals/guidelines-powerbi-visuals)
 - [Highlight data in Power BI custom visuals](https://learn.microsoft.com/en-us/power-bi/developer/visuals/highlight)
 
 ## License

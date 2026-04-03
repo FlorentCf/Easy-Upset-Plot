@@ -1,6 +1,6 @@
 import powerbi from "powerbi-visuals-api";
 
-export type PrimitiveValue = string | number | boolean | null | undefined;
+export type PrimitiveValue = powerbi.PrimitiveValue;
 export type SortMode = "countDescending" | "lexical" | "degreeThenCount";
 export type LabelStrategy = "truncate" | "middle" | "wrap";
 export type CountDisplayFormat = "standard" | "compact" | "raw";
@@ -29,6 +29,7 @@ export interface IntersectionDatum extends SelectionBackedDatum {
     id: string;
     mask: number;
     count: number;
+    highlightCount: number;
     degree: number;
     activeSetIndexes: number[];
     label: string;
@@ -44,12 +45,15 @@ export interface SetDatum extends SelectionBackedDatum {
     setIndex: number;
     name: string;
     size: number;
+    highlightSize: number;
 }
 
 export interface ParsedVisualData {
     status: DataStatus;
     statusMessage?: string;
     totalCount: number;
+    totalHighlightCount: number;
+    hasHighlights: boolean;
     validRowCount: number;
     skippedRowCount: number;
     countFormatString?: string;

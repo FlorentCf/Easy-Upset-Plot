@@ -63,6 +63,19 @@ export function buildIntersectionTooltip(
         },
     ];
 
+    if (data.hasHighlights) {
+        tooltipItems.push({
+            displayName: "Highlighted",
+            value: formatCountValue(intersection.highlightCount, settings, data.countFormatString),
+        });
+        tooltipItems.push({
+            displayName: "Highlighted share",
+            value: intersection.count > 0
+                ? formatPercentValue(intersection.highlightCount / intersection.count, settings.locale)
+                : "0%",
+        });
+    }
+
     if (inactiveSetNames.length > 0 && inactiveSetNames.length <= 8) {
         tooltipItems.push({
             displayName: settings.intersectionMode === "inclusive" ? "Ignored sets" : "Inactive sets",
@@ -85,7 +98,7 @@ export function buildSetTooltip(
     data: DisplayedVisualData,
     settings: ResolvedSettings,
 ): TooltipDataItem[] {
-    return [
+    const tooltipItems: TooltipDataItem[] = [
         {
             header: setDatum.name,
             displayName: "Set",
@@ -100,6 +113,21 @@ export function buildSetTooltip(
             value: data.totalCount > 0 ? formatPercentValue(setDatum.size / data.totalCount, settings.locale) : "0%",
         },
     ];
+
+    if (data.hasHighlights) {
+        tooltipItems.push({
+            displayName: "Highlighted",
+            value: formatCountValue(setDatum.highlightSize, settings, data.countFormatString),
+        });
+        tooltipItems.push({
+            displayName: "Highlighted share",
+            value: setDatum.size > 0
+                ? formatPercentValue(setDatum.highlightSize / setDatum.size, settings.locale)
+                : "0%",
+        });
+    }
+
+    return tooltipItems;
 }
 
 export function buildSelectionOverlapTooltip(

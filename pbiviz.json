@@ -1,18 +1,18 @@
 {
   "visual": {
     "name": "fastUpsetPlot",
-    "displayName": "UpSet Criteria",
+    "displayName": "Easy UpSet Plot",
     "guid": "fastUpsetPlotF698E7EC4BCE45198098296CC08DD1DA",
     "visualClassName": "Visual",
     "version": "1.0.0.0",
-    "description": "A canvas-first UpSet visual for exploring exact and inclusive criteria intersections in pre-aggregated Power BI data.",
-    "supportUrl": "https://github.com/FlorentCf/powerbi-upset-criteria/issues",
-    "gitHubUrl": "https://github.com/FlorentCf/powerbi-upset-criteria"
+    "description": "A canvas-first Power BI UpSet visual for exploring exact and inclusive intersections in pre-aggregated data.",
+    "supportUrl": "https://github.com/FlorentCf/Easy-Upset-Plot/issues",
+    "gitHubUrl": "https://github.com/FlorentCf/Easy-Upset-Plot"
   },
   "apiVersion": "5.11.0",
   "author": {
     "name": "Florent Chif",
-    "email": "florent.chif@local.invalid"
+    "email": "chif.florent@gmail.com"
   },
   "assets": {
     "icon": "assets/icon.png"

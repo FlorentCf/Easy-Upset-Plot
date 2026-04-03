@@ -35,7 +35,7 @@ export class PerfTracker {
             .map(([name, duration]) => `${name}=${duration.toFixed(1)}ms`)
             .join(" ");
 
-            console.debug(`[UpSet Criteria] ${describeUpdateType(this.updateType)} ${summary}`);
+            console.debug(`[Easy UpSet Plot] ${describeUpdateType(this.updateType)} ${summary}`);
     }
 }
 
