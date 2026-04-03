@@ -1,0 +1,9 @@
+Set A,Set B,Set C,Count,Label,Sort Metric
+0,0,0,0,All zeros,0
+1,1,1,999999999,All ones,999999999
+1,0,1,25,Duplicate first,25
+1,0,1,15,Duplicate second,15
+1,,0,20,Missing set value,20
+true,false,true,12,Boolean flags,12
+0,1,0,-5,Negative count,-5
+0,1,0,9,Valid small,9

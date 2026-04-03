@@ -1,0 +1,177 @@
+.fast-upset {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    outline: none;
+}
+
+.fast-upset__canvas,
+.fast-upset__overlay,
+.fast-upset__message,
+.fast-upset__landing {
+    position: absolute;
+    inset: 0;
+}
+
+.fast-upset__canvas {
+    display: block;
+}
+
+.fast-upset__overlay {
+    pointer-events: none;
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+}
+
+.fast-upset__hit-target {
+    position: absolute;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent !important;
+    background-image: none !important;
+    opacity: 1;
+    color: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+    outline: none;
+    border-radius: 2px;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    mix-blend-mode: normal !important;
+    user-select: none;
+}
+
+.fast-upset__hit-target:hover,
+.fast-upset__hit-target:active,
+.fast-upset__hit-target:focus {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    border-color: transparent !important;
+}
+
+.fast-upset__hit-target:focus-visible {
+    box-shadow: inset 0 0 0 2px #0f172a !important;
+}
+
+.fast-upset__message {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px;
+    color: #243447;
+    font: 600 12px/1.45 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+    background: transparent;
+}
+
+.fast-upset__message[hidden] {
+    display: none;
+}
+
+.fast-upset__landing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    padding: 24px;
+}
+
+.fast-upset__landing[hidden] {
+    display: none;
+}
+
+.fast-upset__landing-card {
+    max-width: 420px;
+    padding: 18px 20px;
+    border: 1px solid rgba(47, 95, 152, 0.14);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
+    color: #1f2a37;
+}
+
+.fast-upset__landing-title {
+    font: 700 18px/1.2 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+    margin-bottom: 8px;
+}
+
+.fast-upset__landing-body,
+.fast-upset__landing-steps {
+    font: 500 12px/1.55 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+}
+
+.fast-upset__landing-steps {
+    margin-top: 8px;
+    color: #4a5b70;
+}
+
+.fast-upset__guide-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+    border: 1px solid rgba(47, 95, 152, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #2f5f98;
+    padding: 6px 12px;
+    font: 600 11px/1 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+}
+
+.fast-upset__guide-toggle[hidden] {
+    display: none;
+}
+
+.fast-upset__guide {
+    position: absolute;
+    top: 44px;
+    right: 10px;
+    z-index: 4;
+    width: min(280px, calc(100% - 20px));
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(47, 95, 152, 0.14);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 32px rgba(31, 41, 55, 0.08);
+    color: #243447;
+}
+
+.fast-upset__guide[hidden] {
+    display: none;
+}
+
+.fast-upset__guide-title {
+    font: 700 12px/1.2 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+    margin-bottom: 6px;
+}
+
+.fast-upset__guide-line {
+    font: 500 11px/1.45 "Segoe UI", wf_segoe-ui_normal, helvetica, arial, sans-serif;
+    margin-top: 4px;
+}
+
+.fast-upset__live-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

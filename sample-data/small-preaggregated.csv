@@ -1,0 +1,11 @@
+FG based on UPN Type,FG based on Mapping,Is on MDM,Has Stock,Has GMC,Material Count,Label,Sort Metric
+1,1,1,0,1,148,Core managed stock,148
+1,1,0,0,1,113,Managed GMC only,113
+1,0,1,1,0,86,UPN+MDM+Stock,86
+1,0,0,1,0,64,UPN+Stock,64
+0,1,1,1,1,59,Mapping managed stock GMC,59
+0,1,1,0,0,42,Mapping and MDM,42
+0,0,1,1,0,31,MDM+Stock,31
+0,0,1,0,1,22,MDM+GMC,22
+0,0,0,1,1,18,Stock+GMC,18
+0,0,0,0,0,11,None,11

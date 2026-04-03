@@ -1,0 +1,32 @@
+{
+  "name": "powerbi-upset-criteria",
+  "description": "UpSet Criteria Power BI custom visual optimized for pre-aggregated intersection data.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "prepare:tools": "node scripts/patch-pbiviz-tools.mjs",
+    "postinstall": "npm run prepare:tools",
+    "pbiviz": "pbiviz",
+    "start": "npm run prepare:tools && pbiviz start",
+    "build": "npm run prepare:tools && pbiviz package --resources --no-pbiviz --no-minify",
+    "package": "npm run prepare:tools && pbiviz package",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+    "test": "tsc -p tsconfig.test.json && node .tmp/test/test/run-tests.js",
+    "check": "npm run lint && npm run typecheck && npm run test"
+  },
+  "dependencies": {
+    "powerbi-visuals-api": "5.11.0",
+    "powerbi-visuals-utils-formattingmodel": "6.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "eslint": "^9.11.1",
+    "eslint-plugin-powerbi-visuals": "^1.0.0",
+    "powerbi-visuals-tools": "7.0.3",
+    "typescript": "5.5.4"
+  },
+  "version": "1.0.0",
+  "type": "commonjs"
+}

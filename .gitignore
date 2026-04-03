@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.tmp/
+.pbiviz-certs/
+.vscode/
+webpack.statistics.prod.html
+*.log
+*.tmp
+Thumbs.db
+Desktop.ini

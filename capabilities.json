@@ -1,0 +1,353 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Set",
+      "name": "set",
+      "kind": "Grouping",
+      "description": "One or more 0/1 columns that define set membership for each pre-aggregated combination.",
+      "preferredTypes": [
+        {
+          "bool": true
+        },
+        {
+          "integer": true
+        },
+        {
+          "numeric": true
+        }
+      ]
+    },
+    {
+      "displayName": "Count",
+      "name": "count",
+      "kind": "Measure",
+      "description": "The size of the exact combination represented by the row.",
+      "requiredTypes": [
+        {
+          "integer": true
+        },
+        {
+          "numeric": true
+        }
+      ]
+    },
+    {
+      "displayName": "Label",
+      "name": "label",
+      "kind": "Grouping",
+      "description": "Optional custom label for a combination."
+    },
+    {
+      "displayName": "Sort Metric",
+      "name": "sortMetric",
+      "kind": "Measure",
+      "description": "Optional numeric metric used as a secondary ordering tiebreaker.",
+      "preferredTypes": [
+        {
+          "integer": true
+        },
+        {
+          "numeric": true
+        }
+      ]
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "conditions": [
+        {
+          "set": {
+            "max": 20
+          },
+          "count": {
+            "max": 1
+          },
+          "label": {
+            "max": 1
+          },
+          "sortMetric": {
+            "max": 1
+          }
+        }
+      ],
+      "table": {
+        "rows": {
+          "select": [
+            {
+              "for": {
+                "in": "set"
+              }
+            },
+            {
+              "for": {
+                "in": "label"
+              }
+            },
+            {
+              "for": {
+                "in": "sortMetric"
+              }
+            },
+            {
+              "for": {
+                "in": "count"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "objects": {
+    "dataDisplay": {
+      "properties": {
+        "intersectionMode": {
+          "type": {
+            "enumeration": [
+              {
+                "value": "exact"
+              },
+              {
+                "value": "inclusive"
+              }
+            ]
+          }
+        },
+        "maxIntersections": {
+          "type": {
+            "integer": true
+          }
+        },
+        "sortMode": {
+          "type": {
+            "enumeration": [
+              {
+                "value": "countDescending"
+              },
+              {
+                "value": "lexical"
+              },
+              {
+                "value": "degreeThenCount"
+              }
+            ]
+          }
+        },
+        "minimumCount": {
+          "type": {
+            "integer": true
+          }
+        },
+        "showOther": {
+          "type": {
+            "bool": true
+          }
+        },
+        "showEmptyIntersection": {
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    },
+    "colors": {
+      "properties": {
+        "activeDotColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "inactiveDotColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "connectorColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "intersectionBarColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "setBarColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "selectedColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "backgroundColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "dimmedOpacity": {
+          "type": {
+            "numeric": true
+          }
+        }
+      }
+    },
+    "labels": {
+      "properties": {
+        "showSetLabels": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "labelStrategy": {
+          "type": {
+            "enumeration": [
+              {
+                "value": "truncate"
+              },
+              {
+                "value": "middle"
+              },
+              {
+                "value": "wrap"
+              }
+            ]
+          }
+        },
+        "showBarCounts": {
+          "type": {
+            "bool": true
+          }
+        },
+        "countDisplayFormat": {
+          "type": {
+            "enumeration": [
+              {
+                "value": "standard"
+              },
+              {
+                "value": "compact"
+              },
+              {
+                "value": "raw"
+              }
+            ]
+          }
+        },
+        "showPercentages": {
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    },
+    "layout": {
+      "properties": {
+        "leftPanelWidth": {
+          "type": {
+            "integer": true
+          }
+        },
+        "rowHeight": {
+          "type": {
+            "integer": true
+          }
+        },
+        "columnWidth": {
+          "type": {
+            "integer": true
+          }
+        },
+        "intersectionBarHeight": {
+          "type": {
+            "integer": true
+          }
+        },
+        "dotRadius": {
+          "type": {
+            "integer": true
+          }
+        },
+        "connectorThickness": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "innerPadding": {
+          "type": {
+            "integer": true
+          }
+        }
+      }
+    },
+    "behavior": {
+      "properties": {
+        "enableSelection": {
+          "type": {
+            "bool": true
+          }
+        },
+        "showGuide": {
+          "type": {
+            "bool": true
+          }
+        },
+        "respectHighContrast": {
+          "type": {
+            "bool": true
+          }
+        },
+        "enableDebugLogging": {
+          "type": {
+            "bool": true
+          }
+        }
+      }
+    }
+  },
+  "tooltips": {
+    "supported": true
+  },
+  "supportsKeyboardFocus": true,
+  "supportsMultiVisualSelection": true,
+  "supportsLandingPage": true,
+  "supportsEmptyDataView": true,
+  "privileges": []
+}

@@ -1,0 +1,97 @@
+FG based on UPN Type,FG based on Mapping,Is on MDM,Has Stock,Has GMC,Sales Since 2024,Has Warranty,Is Critical,Material Count,Label,Sort Metric
+0,0,0,0,0,0,0,0,13,None,13
+1,0,0,0,0,0,0,0,43,FG based on UPN Type,43
+0,1,0,0,0,0,0,0,60,FG based on Mapping,60
+1,1,0,0,0,0,0,0,90,FG based on UPN Type + FG based on Mapping,90
+0,0,1,0,0,0,0,0,94,Is on MDM,94
+1,0,1,0,0,0,0,0,124,FG based on UPN Type + Is on MDM,124
+0,1,1,0,0,0,0,0,50,FG based on Mapping + Is on MDM,50
+1,1,1,0,0,0,0,0,80,FG based on UPN Type + FG based on Mapping + Is on MDM,80
+0,0,0,1,0,0,0,0,71,Has Stock,71
+1,0,0,1,0,0,0,0,101,FG based on UPN Type + Has Stock,101
+0,1,0,1,0,0,0,0,118,FG based on Mapping + Has Stock,118
+1,1,0,1,0,0,0,0,57,FG based on UPN Type + FG based on Mapping + Has Stock,57
+0,0,1,1,0,0,0,0,61,Is on MDM + Has Stock,61
+1,0,1,1,0,0,0,0,91,FG based on UPN Type + Is on MDM + Has Stock,91
+0,1,1,1,0,0,0,0,108,FG based on Mapping + Is on MDM + Has Stock,108
+1,1,1,1,0,0,0,0,138,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock,138
+0,0,0,0,1,0,0,0,116,Has GMC,116
+1,0,0,0,1,0,0,0,55,FG based on UPN Type + Has GMC,55
+0,1,0,0,1,0,0,0,72,FG based on Mapping + Has GMC,72
+1,1,0,0,1,0,0,0,102,FG based on UPN Type + FG based on Mapping + Has GMC,102
+0,0,1,0,1,0,0,0,106,Is on MDM + Has GMC,106
+1,0,1,0,1,0,0,0,136,FG based on UPN Type + Is on MDM + Has GMC,136
+0,1,1,0,1,0,0,0,62,FG based on Mapping + Is on MDM + Has GMC,62
+1,1,1,0,1,0,0,0,92,FG based on UPN Type + FG based on Mapping + Is on MDM + Has GMC,92
+0,0,0,1,1,0,0,0,83,Has Stock + Has GMC,83
+1,0,0,1,1,0,0,0,113,FG based on UPN Type + Has Stock + Has GMC,113
+0,1,0,1,1,0,0,0,130,FG based on Mapping + Has Stock + Has GMC,130
+1,1,0,1,1,0,0,0,69,FG based on UPN Type + FG based on Mapping + Has Stock + Has GMC,69
+0,0,1,1,1,0,0,0,73,Is on MDM + Has Stock + Has GMC,73
+1,0,1,1,1,0,0,0,103,FG based on UPN Type + Is on MDM + Has Stock + Has GMC,103
+0,1,1,1,1,0,0,0,120,FG based on Mapping + Is on MDM + Has Stock + Has GMC,120
+1,1,1,1,1,0,0,0,150,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock + Has GMC,150
+0,0,0,0,0,1,0,0,115,Sales Since 2024,115
+1,0,0,0,0,1,0,0,54,FG based on UPN Type + Sales Since 2024,54
+0,1,0,0,0,1,0,0,71,FG based on Mapping + Sales Since 2024,71
+1,1,0,0,0,1,0,0,101,FG based on UPN Type + FG based on Mapping + Sales Since 2024,101
+0,0,1,0,0,1,0,0,105,Is on MDM + Sales Since 2024,105
+1,0,1,0,0,1,0,0,135,FG based on UPN Type + Is on MDM + Sales Since 2024,135
+0,1,1,0,0,1,0,0,61,FG based on Mapping + Is on MDM + Sales Since 2024,61
+1,1,1,0,0,1,0,0,91,FG based on UPN Type + FG based on Mapping + Is on MDM + Sales Since 2024,91
+0,0,0,1,0,1,0,0,82,Has Stock + Sales Since 2024,82
+1,0,0,1,0,1,0,0,112,FG based on UPN Type + Has Stock + Sales Since 2024,112
+0,1,0,1,0,1,0,0,129,FG based on Mapping + Has Stock + Sales Since 2024,129
+1,1,0,1,0,1,0,0,68,FG based on UPN Type + FG based on Mapping + Has Stock + Sales Since 2024,68
+0,0,1,1,0,1,0,0,72,Is on MDM + Has Stock + Sales Since 2024,72
+1,0,1,1,0,1,0,0,102,FG based on UPN Type + Is on MDM + Has Stock + Sales Since 2024,102
+0,1,1,1,0,1,0,0,119,FG based on Mapping + Is on MDM + Has Stock + Sales Since 2024,119
+1,1,1,1,0,1,0,0,149,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock + Sales Since 2024,149
+0,0,0,0,1,1,0,0,127,Has GMC + Sales Since 2024,127
+1,0,0,0,1,1,0,0,66,FG based on UPN Type + Has GMC + Sales Since 2024,66
+0,1,0,0,1,1,0,0,83,FG based on Mapping + Has GMC + Sales Since 2024,83
+1,1,0,0,1,1,0,0,113,FG based on UPN Type + FG based on Mapping + Has GMC + Sales Since 2024,113
+0,0,1,0,1,1,0,0,117,Is on MDM + Has GMC + Sales Since 2024,117
+1,0,1,0,1,1,0,0,147,FG based on UPN Type + Is on MDM + Has GMC + Sales Since 2024,147
+0,1,1,0,1,1,0,0,73,FG based on Mapping + Is on MDM + Has GMC + Sales Since 2024,73
+1,1,1,0,1,1,0,0,103,FG based on UPN Type + FG based on Mapping + Is on MDM + Has GMC + Sales Since 2024,103
+0,0,0,1,1,1,0,0,94,Has Stock + Has GMC + Sales Since 2024,94
+1,0,0,1,1,1,0,0,124,FG based on UPN Type + Has Stock + Has GMC + Sales Since 2024,124
+0,1,0,1,1,1,0,0,141,FG based on Mapping + Has Stock + Has GMC + Sales Since 2024,141
+1,1,0,1,1,1,0,0,80,FG based on UPN Type + FG based on Mapping + Has Stock + Has GMC + Sales Since 2024,80
+0,0,1,1,1,1,0,0,84,Is on MDM + Has Stock + Has GMC + Sales Since 2024,84
+1,0,1,1,1,1,0,0,114,FG based on UPN Type + Is on MDM + Has Stock + Has GMC + Sales Since 2024,114
+0,1,1,1,1,1,0,0,131,FG based on Mapping + Is on MDM + Has Stock + Has GMC + Sales Since 2024,131
+1,1,1,1,1,1,0,0,161,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock + Has GMC + Sales Since 2024,161
+0,0,0,0,0,0,1,0,113,Has Warranty,113
+1,0,0,0,0,0,1,0,52,FG based on UPN Type + Has Warranty,52
+0,1,0,0,0,0,1,0,69,FG based on Mapping + Has Warranty,69
+1,1,0,0,0,0,1,0,99,FG based on UPN Type + FG based on Mapping + Has Warranty,99
+0,0,1,0,0,0,1,0,103,Is on MDM + Has Warranty,103
+1,0,1,0,0,0,1,0,133,FG based on UPN Type + Is on MDM + Has Warranty,133
+0,1,1,0,0,0,1,0,59,FG based on Mapping + Is on MDM + Has Warranty,59
+1,1,1,0,0,0,1,0,89,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Warranty,89
+0,0,0,1,0,0,1,0,80,Has Stock + Has Warranty,80
+1,0,0,1,0,0,1,0,110,FG based on UPN Type + Has Stock + Has Warranty,110
+0,1,0,1,0,0,1,0,127,FG based on Mapping + Has Stock + Has Warranty,127
+1,1,0,1,0,0,1,0,66,FG based on UPN Type + FG based on Mapping + Has Stock + Has Warranty,66
+0,0,1,1,0,0,1,0,70,Is on MDM + Has Stock + Has Warranty,70
+1,0,1,1,0,0,1,0,100,FG based on UPN Type + Is on MDM + Has Stock + Has Warranty,100
+0,1,1,1,0,0,1,0,117,FG based on Mapping + Is on MDM + Has Stock + Has Warranty,117
+1,1,1,1,0,0,1,0,147,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock + Has Warranty,147
+0,0,0,0,1,0,1,0,125,Has GMC + Has Warranty,125
+1,0,0,0,1,0,1,0,64,FG based on UPN Type + Has GMC + Has Warranty,64
+0,1,0,0,1,0,1,0,81,FG based on Mapping + Has GMC + Has Warranty,81
+1,1,0,0,1,0,1,0,111,FG based on UPN Type + FG based on Mapping + Has GMC + Has Warranty,111
+0,0,1,0,1,0,1,0,115,Is on MDM + Has GMC + Has Warranty,115
+1,0,1,0,1,0,1,0,145,FG based on UPN Type + Is on MDM + Has GMC + Has Warranty,145
+0,1,1,0,1,0,1,0,71,FG based on Mapping + Is on MDM + Has GMC + Has Warranty,71
+1,1,1,0,1,0,1,0,101,FG based on UPN Type + FG based on Mapping + Is on MDM + Has GMC + Has Warranty,101
+0,0,0,1,1,0,1,0,92,Has Stock + Has GMC + Has Warranty,92
+1,0,0,1,1,0,1,0,122,FG based on UPN Type + Has Stock + Has GMC + Has Warranty,122
+0,1,0,1,1,0,1,0,139,FG based on Mapping + Has Stock + Has GMC + Has Warranty,139
+1,1,0,1,1,0,1,0,78,FG based on UPN Type + FG based on Mapping + Has Stock + Has GMC + Has Warranty,78
+0,0,1,1,1,0,1,0,82,Is on MDM + Has Stock + Has GMC + Has Warranty,82
+1,0,1,1,1,0,1,0,112,FG based on UPN Type + Is on MDM + Has Stock + Has GMC + Has Warranty,112
+0,1,1,1,1,0,1,0,129,FG based on Mapping + Is on MDM + Has Stock + Has GMC + Has Warranty,129
+1,1,1,1,1,0,1,0,159,FG based on UPN Type + FG based on Mapping + Is on MDM + Has Stock + Has GMC + Has Warranty,159
